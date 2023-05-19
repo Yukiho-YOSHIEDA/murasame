@@ -1,0 +1,22 @@
+version: '3'
+services:
+  engine:
+    image: voicevox/voicevox_engine:cpu-ubuntu20.04-latest
+    ports:
+      - 50021:50021
+    healthcheck:
+      test: wget --spider -nv --timeout 10 -t 1 http://localhost:50021/docs
+      interval: 1s
+      timeout: 1s
+      retries: 3
+      start_period: 5s
+  server:
+    build: .
+    command: npm run start settings.js
+    depends_on:
+      engine:
+        condition: service_healthy
+    working_dir: /murasame
+    volumes:
+      - ./:/murasame
+    restart: always
