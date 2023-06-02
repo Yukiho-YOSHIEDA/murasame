@@ -158,5 +158,5 @@ export default class DiscordClient {
    */
   setOnLeftVoiceChannelFunc(onLeftVoiceChannelFunc) {
     this.onLeftVoiceChannelFunc = onLeftVoiceChannelFunc;
-	}
+  }
 }
