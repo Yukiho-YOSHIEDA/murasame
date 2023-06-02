@@ -108,7 +108,9 @@ export default class DiscordClient {
         return;
       }
       console.log(`ターゲットチャンネルへのメッセージを取得: ${message.content}`);
-      const trimmedMessage = message.content.length > 100 ? `${message.content.substring(0, 100)}以下略` : message.content;
+	  const regex = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g;
+	  let parsedUrlMessage = message.content.replace(regex, '')
+      const trimmedMessage = parsedUrlMessage.length > 100 ? `${parsedUrlMessage.substring(0, 100)}以下略` : parsedUrlMessage;
       this.onGetMessageFunc(trimmedMessage);
     });
 
@@ -156,5 +158,5 @@ export default class DiscordClient {
    */
   setOnLeftVoiceChannelFunc(onLeftVoiceChannelFunc) {
     this.onLeftVoiceChannelFunc = onLeftVoiceChannelFunc;
-  }
+	}
 }
