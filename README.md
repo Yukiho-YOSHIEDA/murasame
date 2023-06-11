@@ -38,11 +38,19 @@ const setting = {
     BASE_URL: 'http://engine:50021', // VOICEVOX APIのBase URL（基本的に変更の必要なし）
     SPEAKER_ID: 3, // ずんだもんはIDが3
   },
+  BLACKLIST: {
+    REGEX: [
+      /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g, // URL検出
+      /<(:|@).*>/g, // カスタム絵文字とメンション
+      /?.*/g, // ミュートprefix "?"
+    ],
+  },
 };
 
 export default {
   DISCORD: setting.DISCORD,
   VOICEVOX: setting.VOICEVOX,
+  BLACKLIST: setting.BLACKLIST,
 };
 ```
 

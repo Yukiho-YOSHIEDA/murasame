@@ -10,11 +10,13 @@ export default class DiscordClient {
    * @param {String} token
    * @param {String} targetVoiceRoom
    * @param {String} targetChatRoom
+   * @param {String} regex
    */
-  constructor(token, targetVoiceRoom, targetChatRoom) {
+  constructor(token, targetVoiceRoom, targetChatRoom, regex) {
     this.bot = new Eris(token);
     this.targetVoiceRoom = targetVoiceRoom;
     this.targetChatRoom = targetChatRoom;
+    this.regex = regex;
     this.onGetMessageFunc = () => {};
     this.onPlayedMessageFunc = () => {};
     this.onJoinedVoiceChannelFunc = () => {};
@@ -108,8 +110,18 @@ export default class DiscordClient {
         return;
       }
       console.log(`ターゲットチャンネルへのメッセージを取得: ${message.content}`);
-	  const regex = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#\u3000-\u30FE\u4E00-\u9FA0\uFF01-\uFFE3]+/g;
-	  let parsedUrlMessage = message.content.replace(regex, '')
+      let parsedUrlMessage;
+      for (const index in this.regex) {
+        if(message.content.match(this.regex[index])){
+          parsedUrlMessage = message.content.replace(this.regex[index], '');
+          break;
+        }else{
+          parsedUrlMessage = message.content;
+        }
+      }
+      if(parsedUrlMessage.length <= 0){
+        return;
+      };
       const trimmedMessage = parsedUrlMessage.length > 100 ? `${parsedUrlMessage.substring(0, 100)}以下略` : parsedUrlMessage;
       this.onGetMessageFunc(trimmedMessage);
     });
