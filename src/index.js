@@ -27,6 +27,7 @@ const main = () => {
         setting.default.DISCORD.TOKEN,
         setting.default.DISCORD.TARGET_VOICE_ROOM,
         setting.default.DISCORD.TARGET_CHAT_ROOM,
+        setting.default.BLACKLIST.REGEX,
       );
       const voicevoxClient = new VoicevoxClient(
         setting.default.VOICEVOX.BASE_URL,
