@@ -43,25 +43,23 @@ export default class DiscordClient {
         adapterCreator: guild.voiceAdapterCreator,
       });
 
-
       this.voiceChannelConnection = connection;
       console.log('ボイスチャンネルに入室できたのだ');
       this.onJoinedVoiceChannelFunc();
     };
-    this.disconnectVoiceChannel = (client, channelId) => {
+    this.disconnectVoiceChannel = (client, channel) => {
       if (!this.voiceChannelConnection) {
         return;
       }
-      client.channels.fetch(channelId).then((channel) => {
-        if (channel.voiceMembers.size > 1) {
-          return;
-        }
 
-        console.log('ボイスチャンネルから退出するのだ');
-        this.voiceChannelConnection.destroy();
-        this.voiceChannelConnection = null;
-        this.onLeftVoiceChannelFunc();
-      });
+      if (channel.members.size > 1) {
+        return;
+      }
+
+      console.log('ボイスチャンネルから退出するのだ');
+      this.voiceChannelConnection.destroy();
+      this.voiceChannelConnection = null;
+      this.onLeftVoiceChannelFunc();
     };
   }
 
@@ -117,7 +115,7 @@ export default class DiscordClient {
         if (oldState.channel.name !== this.targetVoiceRoom) {
           return;
         }
-        this.disconnectVoiceChannel(client, oldState.channelId);
+        this.disconnectVoiceChannel(client, oldState.channel);
       }
 
       // チャンネル移動
@@ -131,7 +129,7 @@ export default class DiscordClient {
         if (newState.channel.name === this.targetVoiceRoom) {
           this.connectVoiceChannel(client, newState.channelId, newState.guild);
         } else {
-          this.disconnectVoiceChannel(client, oldState.channelId);
+          this.disconnectVoiceChannel(client, oldState.channel);
         }
       }
     });
