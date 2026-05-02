@@ -9,12 +9,12 @@
 Discordでチャットしたものをずんだもんが代読してくれるBot
 
 ## 必須要件
-node.js v18以上
+node.js v22以上
 
 ## 使い方
 1. `$ cp settings_sample.js settings.js`
 1. `setting.js`に各トークンを設定
-1. `$ npm install`
+1. `$ docker compose build`
 1. `$ docker compose up -d`
 
 ## 他の部屋でも代読したい場合

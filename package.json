@@ -3,24 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "start": "npx babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx tsx src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix"
   },
   "author": "Yukiho",
   "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.21.8",
-    "@babel/eslint-parser": "^7.21.8",
-    "@babel/node": "^7.20.7",
-    "@babel/preset-env": "^7.21.5",
-    "eslint": "^8.40.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-webpack-plugin": "^4.0.1"
-  },
   "dependencies": {
-    "axios": "^1.4.0",
-    "eris": "^0.17.2"
+    "@discordjs/opus": "^0.10.0",
+    "@discordjs/voice": "^0.19.2",
+    "axios": "^1.15.2",
+    "discord.js": "^14.26.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "tsx": "^4.21.0"
   }
 }
